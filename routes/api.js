@@ -43,4 +43,24 @@ router.post('/register', (req, res) => {
     }
 });
 
+//creation compte
+router.post('/login', (req, res) => {
+    let userData = req.body
+
+    User.findOne({ email: userData.Add_email }, (error, user) => {
+        if (error) {
+            console.log(error)
+        } else {
+            if (!user) {
+                res.status(401).send('le mail n.est pas bon')
+            } else
+            if (user.password !== userData.password) {
+                res.status(401).send('mot de passe incorrect')
+            } else {
+                res.status(200).send(user)
+            }
+        }
+    })
+})
+
 module.exports = router;
